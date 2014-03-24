@@ -65,6 +65,12 @@ menu(Command) :-
 
 menu(Command) :-
      Command = w,
+     w(Word),
+     atom_length(Word,Length),
+     genstartword(Length,SWL),
+     name(HiddenWord, SWL),
+     write(HiddenWord),
+     nl, nl,
      !.
 
 menu(Command) :-
@@ -98,4 +104,13 @@ print([X|T]) :-
      write(X),
      write(', '),
      print(T).
+
+%% Generate a list SWL of length N of numbers 42. Convert this
+%% list to a name and write it as a start word
+genstartword(N,SWL) :-
+     fill(SWL, 42, N).
+
+fill([], _, 0).
+fill([X|Xs], X, N) :- N0 is N-1, fill(Xs, X, N0).
+
 
